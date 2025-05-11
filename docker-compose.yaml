@@ -2,21 +2,17 @@ version: '3.8'
 
 services:
   app:
-    image: eclipse-temurin:23-jdk
+    image: eclipse-temurin:21-jdk  # เปลี่ยนเป็น Java 21
     container_name: springboot_app
     ports:
       - "8080:8080"
     volumes:
       - ./out/artifacts/demo_jar/demo.jar:/demo.jar
+    environment:
+      - SPRING_MAIN_WEB_APPLICATION_TYPE=servlet
     depends_on:
       - mysql
     command: ["java", "-jar", "/demo.jar"]
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/fitness_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_MAIN_WEB-APPLICATION-TYPE: servlet  # Specify the web application type
 
   mysql:
     image: mysql:8.0
