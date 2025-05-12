@@ -7,9 +7,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./out/artifacts/demo_jar/demo.jar:/demo.jar
+      - ./demo/target/demo-0.0.1-SNAPSHOT.jar:/demo.jar
     environment:
       - SPRING_MAIN_WEB_APPLICATION_TYPE=servlet
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - mysql
     command: ["java", "-jar", "/demo.jar"]
