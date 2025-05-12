@@ -3,6 +3,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
@@ -27,12 +28,15 @@ public class Promotion {
     private Float discountValue;
 
     @Column(name = "startDate", nullable = false)
+    @NotNull(message = "Start date is required.")
     private LocalDate startDate;
 
     @Column(name = "endDate", nullable = false)
+    @NotNull(message = "End date is required.")
     private LocalDate endDate;
 
     @Column(name = "status", nullable = false)
+    @NotNull(message = "Status is required.")
     private String status;
 
     public Long getPromotionId() {

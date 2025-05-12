@@ -27,13 +27,11 @@ public class CreateTrainerReviewService implements Command<CreateTrainerReviewRe
     private final TRatingRepository tRatingRepository;
     private final MemberRepository memberRepository;
     private final TrainerRepository trainerRepository;
-    private final ClassRepository classRepository;
 
-    public CreateTrainerReviewService(TRatingRepository tRatingRepository, MemberRepository memberRepository, TrainerRepository trainerRepository, ClassRepository classRepository) {
+    public CreateTrainerReviewService(TRatingRepository tRatingRepository, MemberRepository memberRepository, TrainerRepository trainerRepository) {
         this.tRatingRepository = tRatingRepository;
         this.memberRepository = memberRepository;
         this.trainerRepository = trainerRepository;
-        this.classRepository = classRepository;
     }
 
     @Override

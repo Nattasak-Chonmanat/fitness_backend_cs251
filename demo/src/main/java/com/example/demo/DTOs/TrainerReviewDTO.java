@@ -25,7 +25,7 @@ public class TrainerReviewDTO {
 
     @DecimalMin(value = "0.0", message = "Rating must be between 0.0 to 5.0.")
     @DecimalMax(value = "5.0", message = "Rating must be between 0.0 to 5.0.")
-    @NotNull
+    @NotNull(message = "Rate is required.")
     @Schema(example = "4.5")
     private Float rate;
 

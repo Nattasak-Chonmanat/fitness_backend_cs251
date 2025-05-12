@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UpdatePaymentService implements UpdateCommand<Long, UpdatePaymentRequest, Response> {
 
     private final PaymentRepository paymentRepository;
+//    private final
 
     public UpdatePaymentService(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
@@ -26,6 +27,9 @@ public class UpdatePaymentService implements UpdateCommand<Long, UpdatePaymentRe
                 "Payment status is not valid (Must be Complete or Canceled) ");
         Payment payment = paymentRepository.findById(id).orElseThrow(() -> new PaymentNotFoundException(id));
         payment.setPaymentStatus(request.getPaymentStatus());
+//        if(request.getPaymentStatus().equals("Complete")) {
+//
+//        }
         paymentRepository.save(payment);
         return ResponseEntity.ok(new Response("Update payment successful", HttpStatus.OK));
     }

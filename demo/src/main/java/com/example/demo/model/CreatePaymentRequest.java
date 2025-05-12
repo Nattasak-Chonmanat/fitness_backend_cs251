@@ -18,6 +18,18 @@ public class CreatePaymentRequest {
     private Long memberId;
 
 
+    @NotNull(message = "Plan id is required.")
+    private Long planId;
+
+
+    public @NotNull(message = "Plan id is required.") Long getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(@NotNull(message = "Plan id is required.") Long planId) {
+        this.planId = planId;
+    }
+
     private String promotionCode;
 
 

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -31,6 +32,19 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    @NotNull(message = "Membership plan is required.")
+    private MembershipPlan membershipPlan;
+
+    public MembershipPlan getMembershipPlan() {
+        return membershipPlan;
+    }
+
+    public void setMembershipPlan(MembershipPlan membershipPlan) {
+        this.membershipPlan = membershipPlan;
+    }
 
     @PrePersist
     public void generateReceiptNumber() {

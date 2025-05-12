@@ -3,13 +3,12 @@ package com.example.demo.service.payment;
 import com.example.demo.Command;
 import com.example.demo.DTOs.PaymentDTO;
 import com.example.demo.exception.MemberNotFoundException;
+import com.example.demo.exception.MembershipNotFoundException;
 import com.example.demo.exception.PromotionNotFoundException;
 import com.example.demo.exception.RequestInvalidException;
-import com.example.demo.model.CreatePaymentRequest;
-import com.example.demo.model.Member;
-import com.example.demo.model.Payment;
-import com.example.demo.model.Promotion;
+import com.example.demo.model.*;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MembershipPlanRepository;
 import com.example.demo.repository.PaymentRepository;
 import com.example.demo.repository.PromotionRepository;
 import org.springframework.http.HttpStatus;
@@ -22,20 +21,25 @@ public class CreatePaymentService implements Command<CreatePaymentRequest, Payme
     private final PaymentRepository paymentRepository;
     private final MemberRepository memberRepository;
     private final PromotionRepository promotionRepository;
+    private final MembershipPlanRepository membershipPlanRepository;
 
-    public CreatePaymentService(PaymentRepository paymentRepository, MemberRepository memberRepository, PromotionRepository promotionRepository) {
+    public CreatePaymentService(PaymentRepository paymentRepository, MemberRepository memberRepository, PromotionRepository promotionRepository, MembershipPlanRepository membershipPlanRepository) {
         this.paymentRepository = paymentRepository;
         this.memberRepository = memberRepository;
         this.promotionRepository = promotionRepository;
+        this.membershipPlanRepository = membershipPlanRepository;
     }
 
     @Override
     public ResponseEntity<PaymentDTO> execute(CreatePaymentRequest request) {
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new MemberNotFoundException(request.getMemberId()));
+        MembershipPlan plan = membershipPlanRepository.findById(request.getPlanId()).orElseThrow(() -> new MembershipNotFoundException(request.getPlanId()));
         Payment payment = new Payment();
         payment.setPaymentMethod(request.getPaymentMethod());
         payment.setPaymentStatus("Pending");
         payment.setMember(member);
+        payment.setMembershipPlan(plan);
+        Float amount = request.getAmount();
         if(request.getPromotionCode() != null) {
             String code = request.getPromotionCode();
             Promotion promotion = promotionRepository.findByCode(code).orElseThrow(() -> new PromotionNotFoundException(code));
@@ -48,6 +52,8 @@ public class CreatePaymentService implements Command<CreatePaymentRequest, Payme
                 discountValue = promotion.getDiscountValue();
                 payment.setAmount(request.getAmount() - discountValue);
             }
+        } else {
+            payment.setAmount(request.getAmount());
         }
         paymentRepository.save(payment);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentDTO(payment));
