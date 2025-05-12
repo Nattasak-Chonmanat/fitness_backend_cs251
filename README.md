@@ -53,3 +53,25 @@ docker-compose up --build
 4. ถ้าทุกอย่างถูกต้องจะต้องได้เว็บหน้าตาแบบนี้
 
 ![img_4.png](img_4.png)
+
+
+## แก้ปัญหา ``Ports are not available:`` error
+ถ้า build docker แล้วเจอ Error ประมาณนี้
+
+```
+Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:3306 -> 0.0.0.0:0: listen tcp 0.0.0.0:3306: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+```
+
+ให้ทําตามขั้นตอนดังนี้
+
+### สําหรับ Window
+1. กดปุ่ม ``Window + R``
+2. พิมพ์ ``services.msc``
+3. เลื่อนหาคําว่า ``MySQL80``
+4. คลิกขวาที่ ``MySQL80`` จากนั้นเลือก ``stop``
+5. รัน project อีกรอบ
+
+### สําหรับ Linux
+1. รันคําสั่ง ```sudo systemctl stop mysql``` หรือ ``sudo systemctl stop mysqld`` (ขึ้นอยู่กับ version ที่ติดตั้ง)
+2. ตรวจสอบสถานะว่า MySQL หยุดแล้วหรือยัง ``sudo systemctl status mysql``
+3. รัน project อีกรอบ
