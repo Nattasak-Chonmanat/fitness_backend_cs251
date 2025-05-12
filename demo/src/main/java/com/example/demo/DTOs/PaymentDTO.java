@@ -1,11 +1,7 @@
 package com.example.demo.DTOs;
 
-import com.example.demo.model.Member;
 import com.example.demo.model.Payment;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 
 import java.time.LocalDate;
 
@@ -18,6 +14,7 @@ public class PaymentDTO {
     private String receiptNumber;
     private String paymentMethod;
     private Long memberId;
+    private String planName;
 
     public PaymentDTO(Payment payment) {
         this.paymentId = payment.getPaymentId();
@@ -27,6 +24,15 @@ public class PaymentDTO {
         this.paymentStatus = payment.getPaymentStatus();
         this.paymentDate = payment.getPaymentDate();
         this.amount = payment.getAmount();
+        this.planName = payment.getMembershipPlan().getPlanName();
+    }
+
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
     }
 
     public PaymentDTO() {

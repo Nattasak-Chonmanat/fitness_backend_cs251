@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class CreatePaymentService implements Command<CreatePaymentRequest, PaymentDTO> {
 
@@ -34,16 +36,16 @@ public class CreatePaymentService implements Command<CreatePaymentRequest, Payme
     public ResponseEntity<PaymentDTO> execute(CreatePaymentRequest request) {
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new MemberNotFoundException(request.getMemberId()));
         MembershipPlan plan = membershipPlanRepository.findById(request.getPlanId()).orElseThrow(() -> new MembershipNotFoundException(request.getPlanId()));
+
+
         Payment payment = new Payment();
-        payment.setPaymentMethod(request.getPaymentMethod());
-        payment.setPaymentStatus("Pending");
-        payment.setMember(member);
-        payment.setMembershipPlan(plan);
-        Float amount = request.getAmount();
+
         if(request.getPromotionCode() != null) {
             String code = request.getPromotionCode();
-            Promotion promotion = promotionRepository.findByCode(code).orElseThrow(() -> new PromotionNotFoundException(code));
-            if(!promotion.getStatus().equalsIgnoreCase("Active")) throw new RequestInvalidException("Promotion is already expired.");
+            Promotion promotion = promotionRepository.findByCode(code).orElseThrow(() ->
+                    new PromotionNotFoundException("Promotion not found with code " + request.getPromotionCode()));
+            LocalDate today = LocalDate.now();
+            if(today.isBefore(promotion.getStartDate()) || today.isAfter(promotion.getEndDate())) throw new RequestInvalidException("Promotion is already expired.");
             float discountValue;
             if(promotion.getDiscountType().equalsIgnoreCase("percentage")) {
                 discountValue = (100f - promotion.getDiscountValue()) / 100;
@@ -55,6 +57,12 @@ public class CreatePaymentService implements Command<CreatePaymentRequest, Payme
         } else {
             payment.setAmount(request.getAmount());
         }
+        payment.setPaymentMethod(request.getPaymentMethod());
+        payment.setPaymentStatus("Pending");
+        payment.setMember(member);
+        payment.setMembershipPlan(plan);
+        Float amount = request.getAmount();
+
         paymentRepository.save(payment);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentDTO(payment));
     }

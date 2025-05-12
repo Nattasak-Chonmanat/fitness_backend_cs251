@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class PromotionNotFoundException extends RuntimeException {
-    public PromotionNotFoundException(String code) {
-        super("Promotion not found with " + code);
+    public PromotionNotFoundException(String message) {
+        super(message);
     }
 }

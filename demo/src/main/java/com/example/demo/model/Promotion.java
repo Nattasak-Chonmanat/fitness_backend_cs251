@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class Promotion {
 
     @NotBlank(message = "Code is required.")
     @Column(name = "code", nullable = false, unique = true)
+    @Schema(description = "Code ของโปรโมชัน", examples = "SAVE25")
     private String code;
 
     @Column(name = "discountType", nullable = false)
@@ -35,9 +37,6 @@ public class Promotion {
     @NotNull(message = "End date is required.")
     private LocalDate endDate;
 
-    @Column(name = "status", nullable = false)
-    @NotNull(message = "Status is required.")
-    private String status;
 
     public Long getPromotionId() {
         return promotionId;
@@ -47,13 +46,6 @@ public class Promotion {
         this.promotionId = promotionId;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public LocalDate getEndDate() {
         return endDate;
