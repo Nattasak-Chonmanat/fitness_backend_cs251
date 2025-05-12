@@ -11,7 +11,10 @@ public enum ErrorMessages {
     BOOKING_NOT_FOUND("Booking not found with an ID: "),
     REVIEW_NOT_FOUND("Review not found with an ID: "),
     EMPLOYEE_NOT_FOUND("Employee not found with an ID: "),
-    MEMBERSHIP_NOT_FOUND("Membership plan not found with an ID: ");
+    MEMBERSHIP_NOT_FOUND("Membership plan not found with an ID: "),
+    ATTENDANCE_NOT_FOUND("Attendance not found with an ID: "),
+    SCHEDULE_NOT_FOUND("Schedule not found with an ID: "),
+    PAYMENT_NOT_FOUND("Payment not found with an ID: ");
 
     private final String message;
 

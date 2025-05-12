@@ -1,9 +1,12 @@
 package com.example.demo.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trainerSchedule")
@@ -21,8 +24,8 @@ public class TrainerSchedule {
     @Column(name = "endTime")
     private LocalTime endTime;
 
-    @OneToOne
-    @JoinColumn(name = "trainer_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "trainerId", nullable = false)
     private Trainer trainer;
 
     public Long getId() {

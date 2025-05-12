@@ -1,9 +1,8 @@
 package com.example.demo.DTOs;
 
 import com.example.demo.model.Trainer;
+import com.example.demo.model.TrainerSchedule;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -32,6 +31,9 @@ public class TrainerDTO {
 
     @Schema(hidden = true)
     private List<TrainerReviewDTO> reviews;
+
+    @Schema(hidden = true)
+    private List<TrainerSchedule> schedules;
 
     public TrainerDTO(Trainer t) {
         this.id = t.getId();

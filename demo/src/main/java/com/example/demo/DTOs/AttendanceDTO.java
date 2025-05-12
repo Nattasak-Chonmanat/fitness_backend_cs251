@@ -19,7 +19,7 @@ public class AttendanceDTO {
         if(a.getCheckinTime() != null && a.getCheckoutTime() != null) {
             this.duration = Duration.between(a.getCheckinTime(), a.getCheckoutTime()).toMinutes() + " minutes";
         } else  {
-            this.duration = Duration.ZERO.toMinutes() + "minutes";
+            this.duration = Duration.ZERO.toMinutes() + " minutes";
         }
     }
 

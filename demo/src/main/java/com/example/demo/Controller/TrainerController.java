@@ -140,7 +140,7 @@ public class TrainerController {
         return updateTrainerService.execute(id, t);
     }
 
-    @Operation(summary = "ลบเทรนเนอร์", description = "ใช้เพื่อลบเทรนเนอร์ออกจากระบบ")
+    @Operation(summary = "ลบเทรนเนอร์", description = "ใช้เพื่อลบเทรนเนอร์ออกจากระบบ branch : {id : #id} ไม่ต้องใส่ก็ได้สําหรับกรณียังไม่อยากให้ trainer มีสาขาประจํา")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "ลบสำเร็จ", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "404", description = "ไม่พบเทรนเนอร์", content = @Content(

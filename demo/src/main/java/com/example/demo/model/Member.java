@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -96,6 +97,18 @@ public class Member {
     @Schema(hidden = true)
     private List<TRating> trainerRatings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Schema(hidden = true)
+    @JsonIgnore
+    private List<Payment> payments = new ArrayList<>();
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
 
     public Member() {
     }

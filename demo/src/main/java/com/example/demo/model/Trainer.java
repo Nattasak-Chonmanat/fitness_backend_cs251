@@ -38,6 +38,18 @@ public class Trainer extends Employee{
     @OneToMany(mappedBy = "trainerId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TRating> trainerRatings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrainerSchedule> trainerSchedules = new ArrayList<>();
+
+    @Schema(hidden = true)
+    @JsonIgnore
+    public List<TrainerSchedule> getTrainerSchedules() {
+        return trainerSchedules;
+    }
+
+    public void setTrainerSchedules(List<TrainerSchedule> trainerSchedules) {
+        this.trainerSchedules = trainerSchedules;
+    }
 
     public List<TRating> getTrainerRatings() {
         return trainerRatings;
