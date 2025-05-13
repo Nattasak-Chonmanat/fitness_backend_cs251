@@ -93,4 +93,6 @@ public class CReview {
     public void setRate(Float rate) {
         this.rate = rate;
     }
+
+
 }

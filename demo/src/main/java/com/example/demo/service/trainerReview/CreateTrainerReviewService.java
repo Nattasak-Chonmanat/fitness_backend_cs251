@@ -48,7 +48,7 @@ public class CreateTrainerReviewService implements Command<CreateTrainerReviewRe
 
         tRatingRepository.save(rating);
 
-        List<TRating> ratings = tRatingRepository.findByTrainerId(trainer);
+        List<TRating> ratings = tRatingRepository.findByTrainer_Id(trainer.getId());
         float avg = (float) ratings.stream().mapToDouble(TRating::getRate).average().orElse(0.0);
 
         trainer.setRating(avg);

@@ -42,7 +42,7 @@ public class Class {
     @JsonIgnore
     private Float rating;
 
-    @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<ClassBooking> classBookingList = new ArrayList<>();
 

@@ -25,7 +25,7 @@ public class GetTrainerReviewByMemberIdService implements Query<Long, List<Train
     @Override
     public ResponseEntity<List<TrainerReviewDTO>> execute(Long memberId) {
         if(memberRepository.findById(memberId).isEmpty()) throw new MemberNotFoundException(memberId);
-        List<TrainerReviewDTO> reviewDTOS = tRatingRepository.findByMemberId(memberId).stream().map(TrainerReviewDTO::new).toList();
+        List<TrainerReviewDTO> reviewDTOS = tRatingRepository.findByMember_Id(memberId).stream().map(TrainerReviewDTO::new).toList();
         return ResponseEntity.ok().body(reviewDTOS);
     }
 }

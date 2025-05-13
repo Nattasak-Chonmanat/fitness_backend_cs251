@@ -35,7 +35,7 @@ public class Trainer extends Employee{
     private List<Class> classes = new ArrayList<>();
 
     @Schema(hidden = true)
-    @OneToMany(mappedBy = "trainerId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TRating> trainerRatings = new ArrayList<>();
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true)

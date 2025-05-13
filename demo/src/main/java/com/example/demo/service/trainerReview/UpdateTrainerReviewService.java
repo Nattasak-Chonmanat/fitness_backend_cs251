@@ -48,7 +48,7 @@ public class UpdateTrainerReviewService implements UpdateCommand<Long, UpdateTra
             Trainer trainer = trainerRepository.findById(rating.getTrainer().getId())
                     .orElseThrow(() -> new TrainerNotFoundException(rating.getTrainer().getId()));
 
-            List<TRating> ratings = tRatingRepository.findByTrainerId(trainer);
+            List<TRating> ratings = tRatingRepository.findByTrainer_Id(trainer.getId());
             float avg = (float) ratings.stream()
                     .mapToDouble(TRating::getRate)
                     .average()

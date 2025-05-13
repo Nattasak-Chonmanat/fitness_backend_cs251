@@ -12,6 +12,7 @@ import com.example.demo.model.Class;
 import com.example.demo.repository.CReviewRepository;
 import com.example.demo.repository.ClassRepository;
 import com.example.demo.repository.MemberRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,6 @@ public class CreateReviewService implements Command<CReviewCreateRequest, CRevie
         clazz.setRating(avg);
         classRepository.save(clazz);
 
-        return ResponseEntity.ok().body(new CReviewDTO(review));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CReviewDTO(review));
     }
 }

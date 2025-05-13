@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 
 public class CReviewSummaryDTO {
+    private Long id;
     private LocalDate reviewDate;
     private String review;
     private String userName;
@@ -15,11 +16,20 @@ public class CReviewSummaryDTO {
 
 
     public CReviewSummaryDTO(CReview cReview, String userName, String className) {
+        this.id = cReview.getId();;
         this.rate = cReview.getRate();
         this.userName = userName;
         this.review = cReview.getReview();
         this.reviewDate = cReview.getReviewDate();
         this.className = className;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getClassName() {

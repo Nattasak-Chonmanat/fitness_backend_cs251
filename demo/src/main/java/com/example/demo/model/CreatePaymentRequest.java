@@ -9,6 +9,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class CreatePaymentRequest {
 
     @PositiveOrZero(message = "Amount must be positive.")
+    @NotNull(message = "Amount is required.")
     private Float amount;
 
     @NotBlank(message = "Payment method is required.")

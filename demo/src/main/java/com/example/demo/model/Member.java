@@ -80,11 +80,11 @@ public class Member {
     @Schema(hidden = true)
     private MembershipPlan membershipPlan = null;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<Attendance> attendances = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<ClassBooking> classBookingList = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public class Member {
     @Schema(hidden = true)
     private List<CReview> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<TRating> trainerRatings = new ArrayList<>();
 

@@ -10,11 +10,8 @@ import java.util.List;
 
 public interface TRatingRepository extends JpaRepository<TRating, Long> {
 
-    @Query("SELECT t FROM TRating t WHERE t.memberId.id = :memberId")
-    List<TRating> findByMemberId(@Param("memberId") Long memberId);
 
-    @Query("SELECT t FROM TRating t WHERE t.trainerId.id = :trainerId")
-    List<TRating> findByTrainerId(@Param("trainerId") Long trainerId);
 
-    List<TRating> findByTrainerId(Trainer trainer);
+    List<TRating> findByMember_Id(Long memberId);
+    List<TRating> findByTrainer_Id(Long trainerId);
 }

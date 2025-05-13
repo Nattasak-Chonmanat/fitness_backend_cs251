@@ -38,28 +38,27 @@ public class TRating {
     @ManyToOne
     @NotNull(message = "Trainer id is required.")
     @JoinColumn(name = "trainer_id", nullable = false)
-    private Trainer trainerId;
+    private Trainer trainer;
 
     @ManyToOne
     @NotNull(message = "Member id is required.")
     @JoinColumn(name = "member_id", nullable = false)
-    private Member memberId;
+    private Member member;
 
-
-    public @NotNull Trainer getTrainer() {
-        return trainerId;
+    public @NotNull(message = "Trainer id is required.") Trainer getTrainer() {
+        return trainer;
     }
 
-    public void setTrainer(@NotNull Trainer trainerId) {
-        this.trainerId = trainerId;
+    public void setTrainer(@NotNull(message = "Trainer id is required.") Trainer trainer) {
+        this.trainer = trainer;
     }
 
-    public @NotNull Member getMember() {
-        return memberId;
+    public @NotNull(message = "Member id is required.") Member getMember() {
+        return member;
     }
 
-    public void setMember(@NotNull Member memberId) {
-        this.memberId = memberId;
+    public void setMember(@NotNull(message = "Member id is required.") Member member) {
+        this.member = member;
     }
 
     public TRating() {

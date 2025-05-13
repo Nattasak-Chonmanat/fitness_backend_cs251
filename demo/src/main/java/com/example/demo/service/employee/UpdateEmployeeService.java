@@ -24,10 +24,10 @@ public class UpdateEmployeeService implements UpdateCommand<Long, Employee, Resp
     }
 
     @Override
-    public ResponseEntity<Response> execute(Long id, Employee employee) {
-        if(!employeeRepository.existsById(id)) throw new EmployeeNotFoundException(id);
-        if(employee.getBranch() != null) {
-            Branch branch = branchRepository.findById(employee.getBranch().getId()).orElseThrow(() -> new BranchNotFoundException(employee.getBranch().getId()));
+    public ResponseEntity<Response> execute(Long id, Employee e) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        if(e.getBranch() != null) {
+            Branch branch = branchRepository.findById(e.getBranch().getId()).orElseThrow(() -> new BranchNotFoundException(e.getBranch().getId()));
             employee.setBranch(branch);
         }
         employeeRepository.save(employee);

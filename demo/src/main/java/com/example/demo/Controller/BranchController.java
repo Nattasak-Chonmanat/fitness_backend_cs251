@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.DTOs.BranchDTO;
 import com.example.demo.DTOs.BranchSummaryDTO;
 import com.example.demo.model.Response;
+import com.example.demo.model.SetManagerRequest;
 import com.example.demo.service.branch.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +26,15 @@ public class BranchController {
     private final CreateBranchService createBranchService;
     private final DeleteBranchService deleteBranchService;
     private final UpdateBranchService updateBranchService;
+    private final SetManagerService setManagerService;
 
-    public BranchController(GetAllBranchService getAllBranchService, GetBranchByIdService getBranchByIdService, CreateBranchService createBranchService, DeleteBranchService deleteBranchService, UpdateBranchService updateBranchService) {
+    public BranchController(GetAllBranchService getAllBranchService, GetBranchByIdService getBranchByIdService, CreateBranchService createBranchService, DeleteBranchService deleteBranchService, UpdateBranchService updateBranchService, SetManagerService setManagerService) {
         this.getAllBranchService = getAllBranchService;
         this.getBranchByIdService = getBranchByIdService;
         this.createBranchService = createBranchService;
         this.deleteBranchService = deleteBranchService;
         this.updateBranchService = updateBranchService;
+        this.setManagerService = setManagerService;
     }
 
     @Operation(summary = "ดึงข้อมูลทั้งหมดของสาขา", description = "สําหรับดึงข้อมูลของทุกสาขา")
@@ -79,6 +83,17 @@ public class BranchController {
     @PutMapping("{id}")
     public ResponseEntity<Response> updateBranch(@PathVariable Long id, @RequestBody @Valid BranchSummaryDTO dto) {
         return updateBranchService.execute(id, dto);
+    }
+
+    @Operation(summary = "อัปเดตผู้จัดการให้สาขา", description = "สําหรับ assign ผู้จัดการให้สาขานั้น")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "สำเร็จ: สาขาถูกอัปเดต"),
+            @ApiResponse(responseCode = "404", description = "ไม่พบข้อมูลสาขา"),
+            @ApiResponse(responseCode = "400", description = "ข้อมูลไม่ถูกต้อง")
+    })
+    @PutMapping("/set-manager/{id}")
+    public ResponseEntity<Response> setManager(@PathVariable Long id, @RequestBody @Valid SetManagerRequest request) {
+        return setManagerService.execute(id, request);
     }
 
 }
