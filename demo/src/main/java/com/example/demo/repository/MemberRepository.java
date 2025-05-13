@@ -2,8 +2,11 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +16,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByUserName(String userName);
 
     List<Member> findByMembershipPlan_Id(Long membershipPlanId);
+
+    @Query("SELECT m FROM Member m WHERE m.expireDate BETWEEN :today AND :targetDate")
+    List<Member> findMembersExpiringSoon(
+            @Param("today") LocalDate today,
+            @Param("targetDate") LocalDate targetDate
+    );
 }
