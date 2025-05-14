@@ -2,9 +2,6 @@ package com.example.demo.DTOs;
 
 import com.example.demo.model.TRating;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -36,15 +33,28 @@ public class TrainerReviewDTO {
     @Schema(example = "101")
     private Long memberId;
 
-    public TrainerReviewDTO(TRating tRating) {
+    @Schema(description = "Trainer's full name", examples = "Test Name")
+    private String trainerFullName;
+
+
+
+    public TrainerReviewDTO(TRating tRating, String fullName) {
         this.id = tRating.getId();
         this.memberId = tRating.getMember().getId();
         this.trainerId = tRating.getTrainer().getId();
         this.rate = tRating.getRate();
         this.reviewDate = tRating.getReviewDate();
         this.review = tRating.getReview();
+        this.trainerFullName = fullName;
     }
 
+    public String getTrainerFullName() {
+        return trainerFullName;
+    }
+
+    public void setTrainerFullName(String trainerFullName) {
+        this.trainerFullName = trainerFullName;
+    }
 
     public TrainerReviewDTO() {
     }

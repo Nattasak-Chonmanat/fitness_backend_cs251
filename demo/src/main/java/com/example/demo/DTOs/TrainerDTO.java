@@ -42,7 +42,9 @@ public class TrainerDTO {
         this.rating = t.getRating();
         this.classes = t.getClasses().stream().map(ClassSummaryDTO::new).toList();
         this.branchId = t.getBranch() != null ? t.getBranch().getId() : null;
-        this.reviews = t.getTrainerRatings().stream().map(TrainerReviewDTO::new).toList();
+        this.reviews = t.getTrainerRatings().stream().map(review -> {
+            return new TrainerReviewDTO(review, t.getFullName());
+        }).toList();
     }
 
     public List<TrainerReviewDTO> getReviews() {

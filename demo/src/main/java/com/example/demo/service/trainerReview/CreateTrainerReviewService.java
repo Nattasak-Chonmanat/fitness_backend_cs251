@@ -2,14 +2,12 @@ package com.example.demo.service.trainerReview;
 
 import com.example.demo.Command;
 import com.example.demo.DTOs.TrainerReviewDTO;
-import com.example.demo.exception.FieldNotAcceptException;
 import com.example.demo.exception.MemberNotFoundException;
 import com.example.demo.exception.TrainerNotFoundException;
 import com.example.demo.model.CreateTrainerReviewRequest;
 import com.example.demo.model.Member;
 import com.example.demo.model.TRating;
 import com.example.demo.model.Trainer;
-import com.example.demo.repository.ClassRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.TRatingRepository;
 import com.example.demo.repository.TrainerRepository;
@@ -54,6 +52,6 @@ public class CreateTrainerReviewService implements Command<CreateTrainerReviewRe
         trainer.setRating(avg);
         trainerRepository.save(trainer);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new TrainerReviewDTO(rating));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TrainerReviewDTO(rating, trainer.getFullName()));
     }
 }

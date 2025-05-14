@@ -3,6 +3,7 @@ package com.example.demo.service.trainerReview;
 import com.example.demo.DTOs.TrainerReviewDTO;
 import com.example.demo.Query;
 import com.example.demo.exception.TrainerNotFoundException;
+import com.example.demo.model.Trainer;
 import com.example.demo.repository.TRatingRepository;
 import com.example.demo.repository.TrainerRepository;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,11 @@ public class GetTrainerReviewByTrainerIdService implements Query<Long, List<Trai
 
     @Override
     public ResponseEntity<List<TrainerReviewDTO>> execute(Long id) {
-        if(trainerRepository.findById(id).isEmpty()) throw new TrainerNotFoundException(id);
-        List<TrainerReviewDTO> trainerReviewDTOS = tRatingRepository.findByTrainer_Id(id).stream().map(TrainerReviewDTO::new).toList();
+        Trainer trainer = trainerRepository.findById(id).orElseThrow(() -> new TrainerNotFoundException(id));
+        List<TrainerReviewDTO> trainerReviewDTOS = tRatingRepository.findByTrainer_Id(id).stream().map(review -> {
+            String fullName = trainer.getFullName();
+            return new TrainerReviewDTO(review, fullName);
+        }).toList();
 
         return ResponseEntity.ok().body(trainerReviewDTOS);
     }
