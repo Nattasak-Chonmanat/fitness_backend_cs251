@@ -1,12 +1,12 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DTOs.MemberDTO;
-import com.example.demo.model.Member;
-import com.example.demo.model.MemberLoginRequest;
-import com.example.demo.model.Response;
-import com.example.demo.model.UpdateMemberMembershipRequest;
+import com.example.demo.model.*;
 import com.example.demo.service.member.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -77,11 +77,22 @@ public class MemberController {
 
     @Operation(summary = "เข้าสู่ระบบสมาชิก", description = "ใช้สำหรับเข้าสู่ระบบสมาชิกโดยตรวจสอบข้อมูลบัญชีผู้ใช้")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "เข้าสู่ระบบสำเร็จ"),
-            @ApiResponse(responseCode = "401", description = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง")
+            @ApiResponse(responseCode = "200", description = "เข้าสู่ระบบสำเร็จ", content = @Content(schema = @Schema(implementation = MemberLoginResponse.class))),
+            @ApiResponse(responseCode = "401", description = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", content = @Content(
+                    examples = @ExampleObject(
+                            name = "ตัวอย่างการตอบกลับ",
+                            summary = "Response Example",
+                            value = """
+                                        {
+                                          "message": "'Operation' success/failed",
+                                          "status": "Http status code(200, 201, 400, 404, 500)"
+                                        }
+                                    """
+                    )
+            ))
     })
     @PostMapping("/login")
-    public ResponseEntity<Response> LoginMember(@RequestBody MemberLoginRequest loginRequest) {
+    public ResponseEntity<MemberLoginResponse> LoginMember(@RequestBody MemberLoginRequest loginRequest) {
         return loginMemberService.execute(loginRequest);
     }
 
