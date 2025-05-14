@@ -25,13 +25,15 @@ public class PaymentController {
     private final GetPaymentByMemberIdService getPaymentByMemberIdService;
     private final DeletePaymentService deletePaymentService;
     private final GetPaymentsService getPaymentsService;
+    private final GetPaymentByIdService getPaymentByIdService;
 
-    public PaymentController(CreatePaymentService createPaymentService, UpdatePaymentService updatePaymentService, GetPaymentByMemberIdService getPaymentByMemberIdService, DeletePaymentService deletePaymentService, GetPaymentsService getPaymentsService) {
+    public PaymentController(CreatePaymentService createPaymentService, UpdatePaymentService updatePaymentService, GetPaymentByMemberIdService getPaymentByMemberIdService, DeletePaymentService deletePaymentService, GetPaymentsService getPaymentsService, GetPaymentByIdService getPaymentByIdService) {
         this.createPaymentService = createPaymentService;
         this.updatePaymentService = updatePaymentService;
         this.getPaymentByMemberIdService = getPaymentByMemberIdService;
         this.deletePaymentService = deletePaymentService;
         this.getPaymentsService = getPaymentsService;
+        this.getPaymentByIdService = getPaymentByIdService;
     }
 
 
@@ -43,6 +45,16 @@ public class PaymentController {
     @GetMapping("get-by-member/{memberId}")
     public ResponseEntity<List<PaymentDTO>> getPaymentByMemberId(@PathVariable Long memberId) {
         return  getPaymentByMemberIdService.execute(memberId);
+    }
+
+    @Operation(
+            summary = "เรียกดูข้อมูลการชำระเงินตาม paymentId",
+            description = "ใช้ paymentId เพื่อดึงข้อมูลการชำระเงิน"
+    )
+    @ApiResponse(responseCode = "200", description = "เรียกข้อมูลสำเร็จ")
+    @GetMapping("/{paymentId}")
+    public ResponseEntity<PaymentDTO> getPaymentById(@PathVariable Long paymentId) {
+        return getPaymentByIdService.execute(paymentId);
     }
 
 
