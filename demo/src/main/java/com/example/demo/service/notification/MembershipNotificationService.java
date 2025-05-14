@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Service
 public class MembershipNotificationService {
 
@@ -21,20 +22,38 @@ public class MembershipNotificationService {
 
     @Scheduled(cron = "0 0 8 * * ?", zone = "Asia/Bangkok")
     public void scheduledMembershipCheck() {
-        notifyExpiringMemberships();
+        notifyExpiringInSevenDaysMemberships();
+        notifyExpiringTodayMemberships();
     }
 
-    public void notifyExpiringMemberships() {
-        LocalDate today = LocalDate.now();
-        LocalDate targetDate = today.plusDays(7);
 
-        List<Member> expiringMembers = memberRepository.findMembersExpiringSoon(today, targetDate);
+
+    public void notifyExpiringInSevenDaysMemberships() {
+        LocalDate targetDate = LocalDate.now().plusDays(7);
+
+        List<Member> expiringMembers = memberRepository.findByExpireDate(targetDate);
 
         for (Member member : expiringMembers) {
             String subject = "แพ็คเกจสมาชิกของคุณกำลังจะหมดอายุ!";
-            String text = String.format("สวัสดีคุณ %s %s,\n\nแพ็คเกจสมาชิกของคุณจะหมดอายุในวันที่ %s\n\nกรุณาต่ออายุเพื่อใช้งานได้อย่างต่อเนื่อง",
+            String text = String.format("สวัสดีคุณ %s %s,\nแพ็คเกจสมาชิกของคุณจะหมดอายุในวันที่ %s\nกรุณาต่ออายุเพื่อใช้งานได้อย่างต่อเนื่อง",
                     member.getFname(), member.getLname(), member.getExpireDate());
 
+            emailService.sendEmail(member.getEmail(), subject, text);
+        }
+    }
+
+    public void notifyExpiringTodayMemberships() {
+        LocalDate today = LocalDate.now();
+
+        List<Member> expiringMembers = memberRepository.findByExpireDate(today);
+        for (Member member : expiringMembers) {
+            String subject = "แพ็คเกจสมาชิกของคุณกำลังจะหมดอายุ!";
+            String text = String.format("""
+                            สวัสดีคุณ %s %s,
+                            แพ็คเกจสมาชิกของคุณจะหมดอายุในวันที่ %s
+                            คุณจะยังสามารถใช้งานบริการของเราได้จนกว่าจะถึง 0:00 ของวันที่ %s
+                            กรุณาต่ออายุเพื่อใช้งานได้อย่างต่อเนื่อง""",
+                    member.getFname(), member.getLname(), member.getExpireDate(), LocalDate.now().plusDays(1));
             emailService.sendEmail(member.getEmail(), subject, text);
         }
     }

@@ -17,9 +17,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByMembershipPlan_Id(Long membershipPlanId);
 
-    @Query("SELECT m FROM Member m WHERE m.expireDate BETWEEN :today AND :targetDate")
-    List<Member> findMembersExpiringSoon(
-            @Param("today") LocalDate today,
-            @Param("targetDate") LocalDate targetDate
-    );
+    List<Member> findByExpireDate(LocalDate date);
+
+    List<Member> findByExpireDateBefore(LocalDate date);
 }
