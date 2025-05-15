@@ -8,7 +8,6 @@ import com.example.demo.repository.MemberRepository;
 import com.example.demo.UpdateCommand;
 import com.example.demo.exception.MemberInvalidException;
 import com.example.demo.exception.MemberNotFoundException;
-import com.example.demo.exception.UsernameNotValidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +26,6 @@ public class UpdateMemberService implements UpdateCommand<Long, Member, Response
 
     @Override
     public ResponseEntity<Response> execute(Long memberId, Member m) {
-        if(memberRepository.findByUserName(m.getUserName()).isPresent()) throw new UsernameNotValidException();
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(memberId));
         if(m.getRegisDate() != null) throw new MemberInvalidException("RegisDate");
         if(!m.getAttendances().isEmpty()) throw new MemberInvalidException("Attendance");

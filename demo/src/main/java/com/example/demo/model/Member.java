@@ -19,7 +19,7 @@ public class Member {
     @Schema(hidden = true)
     private Long id;
 
-    @Column(name = "userName")
+    @Column(name = "userName", unique = true, nullable = false)
     @NotBlank(message = "User name is required.")
     @Schema(description = "Username for new member.", example = "ไม่บอก")
     private String userName;

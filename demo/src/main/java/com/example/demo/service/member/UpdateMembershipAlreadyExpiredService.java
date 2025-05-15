@@ -18,7 +18,7 @@ public class UpdateMembershipAlreadyExpiredService {
     }
 
 
-    @Scheduled(cron = "0 0 10 * * ?" , zone = "Asia/Bangkok")
+    @Scheduled(cron = "0 0 0 * * ?" , zone = "Asia/Bangkok")
     public void setMembershipScheduled() {}
 
     public void setMemberExpiredMembership() {

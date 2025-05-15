@@ -20,4 +20,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByExpireDate(LocalDate date);
 
     List<Member> findByExpireDateBefore(LocalDate date);
+
 }
