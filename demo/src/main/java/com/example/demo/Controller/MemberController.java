@@ -113,7 +113,7 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "ไม่พบสมาชิก")
     })
     @PutMapping("/{memberId}")
-    public ResponseEntity<Response> updateMember(@PathVariable Long memberId, @Valid @RequestBody Member member) {
+    public ResponseEntity<Response> updateMember(@PathVariable Long memberId, @Valid @RequestBody UpdateMemberRequest member) {
         return updateMemberService.execute(memberId, member);
     }
 
