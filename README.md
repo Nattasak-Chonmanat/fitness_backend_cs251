@@ -3,8 +3,7 @@
 ## How to install
 ### สิ่งที่ต้องมี
 - DBMs Tool ตัวไหนก็ได้ (แต่ในตัวอย่างนี้จะสอนแค่ MySQL Workbench)
-- MySQL Server (ตอนที่ Download ครั้งแรกจะถูกถามให้ตั้ง username กับ password ต้องตั้งตามนี้)
-``username`` เป็น ``root``และ``password`` เป็น ``root``
+
 
 ### Build project
 1. เปิด docker desktop ไว้
@@ -21,8 +20,9 @@ docker-compose up --build
 
 
 ## How to access database
-ดาวโหลด MySQL workbench และ MySQL Server(หรือ DBMs ตัวไหนก็ได้แต่อันนี้จะสอนแค่ mysql workbench นะ) 
+ดาวโหลด MySQL workbench และ MySQL Server(หรือ DBMs ตัวไหนก็ได้แต่อันตัวอย่างนี้จะสอนแค่ mysql workbench) 
 
+- เปิด MySQL Workbench ขึ้นมา
 - คลิกเครื่องหมาย "+" ข้างMysql Connections แล้ว set ตามนี้
 - Connection Name : Docker_Database
 - HostName : 127.0.0.1 หรือ localhost
